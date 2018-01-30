@@ -101,8 +101,9 @@ export function autocomplete ({
  * service.
  *
  * @param {Object} $0
- * @param  {string} [$0.clientId]
- * @param  {string} [$0.clientSecret]
+ * @param {string} [$0.clientId]
+ * @param {string} [$0.clientSecret]
+ * @param {string} [$0.forStorage=false]        Specifies whether result is inteded to be stored
  * @param {{lat: number, lon: number}} $0.point Point to reverse geocode
  * @param {string} [$0.url]                     optional URL to override ESRI reverseGeocode endpoint
  * @return {Promise}                            A Promise that'll get resolved with reverse geocode result
