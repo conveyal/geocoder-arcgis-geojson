@@ -95,15 +95,62 @@ export function autocomplete ({
     })
 }
 
+/**
+ * Reverse geocode using
+ * ESRI's {@link https://developers.arcgis.com/rest/geocode/api-reference/geocoding-reverse-geocode.htm|reverseGeocode}
+ * service.
+ *
+ * @param {Object} $0
+ * @param  {string} [$0.clientId]
+ * @param  {string} [$0.clientSecret]
+ * @param {{lat: number, lon: number}} $0.point Point to reverse geocode
+ * @param {string} [$0.url]                     optional URL to override ESRI reverseGeocode endpoint
+ * @return {Promise}                            A Promise that'll get resolved with reverse geocode result
+ */
 export function reverse ({
   clientId,
   clientSecret,
+  forStorage = false,
   point,
   url
 }: BaseQuery & {
+  forStorage?: boolean,
   point: any
 }): Promise<BaseResponse> {
-  return Promise.resolve({ query: point })
+  const geocoder = getGeocoder(clientId, clientSecret, url)
+  const options = {}
+  if (forStorage) {
+    options.forStorage = true
+  }
+
+  // make request to arcgis
+  return geocoder.reverse(lonlat.toString(point), options)
+    .then(response => {
+      // translate response
+      // ArcGIS returns only a single response for reverse geocoding
+      return {
+        features: [{
+          geometry: {
+            coordinates: [
+              response.location.y,
+              response.location.x
+            ],
+            properties: {
+              name: response.address.ShortLabel,
+              county: response.address.Subregion,
+              neighbourhood: response.address.Neighborhood,
+              region: response.address.Region,
+              locality: response.address.city,
+              country_a: response.address.CountryCode,
+              label: response.address.LongLabel
+            },
+            type: 'point'
+          },
+          type: 'feature'
+        }],
+        query: point
+      }
+    })
 }
 
 export function search ({

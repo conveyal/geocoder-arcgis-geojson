@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`g-a-g response 1`] = `
+exports[`basic autocomplete g-a-g response 1`] = `
 Object {
   "features": Array [
     Object {
@@ -60,4 +60,36 @@ Object {
 }
 `;
 
-exports[`request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/suggest?text=123%20main%20st&outFields=*&maxSuggestions=10&f=json"`;
+exports[`basic autocomplete request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/suggest?text=123%20main%20st&outFields=*&maxSuggestions=10&f=json"`;
+
+exports[`basic reverse g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          37.060855792976916,
+          -122.00718855545652,
+        ],
+        "properties": Object {
+          "country_a": "USA",
+          "county": "Santa Cruz County",
+          "label": "14 Victor Sq, Scotts Valley, CA, 95066, USA",
+          "locality": undefined,
+          "name": "14 Victor Sq",
+          "neighbourhood": "",
+          "region": "California",
+        },
+        "type": "point",
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "lat": 37.06146,
+    "lon": -122.006443,
+  },
+}
+`;
+
+exports[`basic reverse request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=-122.006443%2C37.06146&maxLocations=10&f=json"`;

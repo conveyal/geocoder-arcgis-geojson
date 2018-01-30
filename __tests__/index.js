@@ -2,8 +2,9 @@
 
 import nock from 'nock'
 
-import {autocomplete} from '../index'
+import {autocomplete, reverse} from '../index'
 
+const mockReverseResult = require('./mock-reverse-result.json')
 const mockSuggestResult = require('./mock-suggest-result.json')
 
 describe('geocoder-arcgis-geojson', () => {
@@ -12,14 +13,33 @@ describe('geocoder-arcgis-geojson', () => {
       nock('https://geocode.arcgis.com/')
         .get(/arcgis\/rest\/services\/World\/GeocodeServer\/suggest/)
         .reply(200, (uri, requestBody) => {
-          expect(uri).toMatchSnapshot('request uri')
+          expect(uri).toMatchSnapshot('basic autocomplete request uri')
           return mockSuggestResult
         })
 
       const result = await autocomplete({
         text: '123 main st'
       })
-      expect(result).toMatchSnapshot('g-a-g response')
+      expect(result).toMatchSnapshot('basic autocomplete g-a-g response')
+    })
+  })
+
+  describe('reverse', () => {
+    it('should make basic reverse query', async () => {
+      nock('https://geocode.arcgis.com/')
+        .get(/arcgis\/rest\/services\/World\/GeocodeServer\/reverseGeocode/)
+        .reply(200, (uri, requestBody) => {
+          expect(uri).toMatchSnapshot('basic reverse request uri')
+          return mockReverseResult
+        })
+
+      const result = await reverse({
+        point: {
+          lat: 37.061460,
+          lon: -122.006443
+        }
+      })
+      expect(result).toMatchSnapshot('basic reverse g-a-g response')
     })
   })
 })
