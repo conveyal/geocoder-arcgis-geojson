@@ -89,7 +89,7 @@ search({
 
 ### autocomplete
 
-[index.js:64-96](https://github.com/conveyal/geocoder-arcgis-geojson/blob/6171f18a5c39972a215af21247791fadf56ecc4f/index.js#L64-L96 "Source code on GitHub")
+[index.js:64-98](https://github.com/conveyal/geocoder-arcgis-geojson/blob/e7e51f5a03d9ca00deaa9718e2c957022a4b792c/index.js#L64-L98 "Source code on GitHub")
 
 Search for and address using
 ESRI's [suggest](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-suggest.htm)
@@ -98,11 +98,11 @@ of address suggestions and corresponding magicKeys
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
-    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
-    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
-    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**
-    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
     -   `$0.text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** query text
     -   `$0.url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional URL to override ESRI suggest endpoint
 
@@ -110,7 +110,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### reverse
 
-[index.js:111-155](https://github.com/conveyal/geocoder-arcgis-geojson/blob/6171f18a5c39972a215af21247791fadf56ecc4f/index.js#L111-L155 "Source code on GitHub")
+[index.js:113-157](https://github.com/conveyal/geocoder-arcgis-geojson/blob/e7e51f5a03d9ca00deaa9718e2c957022a4b792c/index.js#L113-L157 "Source code on GitHub")
 
 Reverse geocode using
 ESRI's [reverseGeocode](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-reverse-geocode.htm)
@@ -118,10 +118,10 @@ service.
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
-    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
-    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
-    -   `$0.forStorage` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Specifies whether result is inteded to be stored (optional, default `false`)
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `$0.forStorage` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Specifies whether result is inteded to be stored (optional, default `false`)
     -   `$0.point` **{lat: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), lon: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}** Point to reverse geocode
     -   `$0.url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional URL to override ESRI reverseGeocode endpoint
 
@@ -129,17 +129,23 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### search
 
-[index.js:157-172](https://github.com/conveyal/geocoder-arcgis-geojson/blob/6171f18a5c39972a215af21247791fadf56ecc4f/index.js#L157-L172 "Source code on GitHub")
+[index.js:176-251](https://github.com/conveyal/geocoder-arcgis-geojson/blob/e7e51f5a03d9ca00deaa9718e2c957022a4b792c/index.js#L176-L251 "Source code on GitHub")
+
+Search for an address using
+ESRI's [findAddressCandidates](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-find-address-candidates.htm)
+service.
 
 **Parameters**
 
--   `$0` **any**
-    -   `$0.clientId`  
-    -   `$0.clientSecret`  
-    -   `$0.boundary`  
-    -   `$0.focusPoint`  
-    -   `$0.size`   (optional, default `10`)
-    -   `$0.text`  
-    -   `$0.url`  
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+    -   `$0.forStorage` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Specifies whether result is inteded to be stored (optional, default `false`)
+    -   `$0.magicKey` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** magicKey to use in searching as obtained from `suggest` results
+    -   `$0.size` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**  (optional, default `10`)
+    -   `$0.text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The address text to query for
+    -   `$0.url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional URL to override ESRI reverseGeocode endpoint
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;BaseResponse>**
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** A Promise that'll get resolved with search result
