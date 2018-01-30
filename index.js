@@ -21,7 +21,7 @@ type BaseQuery = {
 }
 
 type BaseResponse = {
-  isomorphicMapzenSearchQuery: {}
+  query: any
 }
 
 function boundaryToSearchExtent (boundary: Boundary): string {
@@ -49,7 +49,8 @@ function getGeocoder (clientId: ?string, clientSecret: ?string, endpoint: ?strin
 /**
  * Search for and address using
  * ESRI's {@link https://developers.arcgis.com/rest/geocode/api-reference/geocoding-suggest.htm|suggest}
- * service.
+ * service.  This service does not return geojson, instead it returns the list
+ * of address suggestions and corresponding magicKeys
  *
  * @param {Object} $0
  * @param  {string} [$0.clientId]
@@ -86,7 +87,10 @@ export function autocomplete ({
     .then(response => {
       // translate response
       return {
-        features: response.suggestions
+        features: response.suggestions,
+        query: {
+          text
+        }
       }
     })
 }
@@ -98,8 +102,8 @@ export function reverse ({
   url
 }: BaseQuery & {
   point: any
-}) {
-
+}): Promise<BaseResponse> {
+  return Promise.resolve({ query: point })
 }
 
 export function search ({
@@ -115,6 +119,6 @@ export function search ({
   focusPoint?: any,
   size?: number,
   text: string,
-}) {
-
+}): Promise<BaseResponse> {
+  return Promise.resolve({ query: text })
 }

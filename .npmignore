@@ -2,5 +2,6 @@
 tmp
 __tests__
 coverage
+.flowconfig
 .travis.yml
 yarn.lock

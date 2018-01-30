@@ -54,6 +54,9 @@ Object {
       "text": "123 Main St, Chesnee, SC, 29323, USA",
     },
   ],
+  "query": Object {
+    "text": "123 main st",
+  },
 }
 `;
 
