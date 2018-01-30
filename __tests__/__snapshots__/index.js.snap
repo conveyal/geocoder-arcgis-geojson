@@ -71,16 +71,16 @@ Object {
           37.060855792976916,
           -122.00718855545652,
         ],
-        "properties": Object {
-          "country_a": "USA",
-          "county": "Santa Cruz County",
-          "label": "14 Victor Sq, Scotts Valley, CA, 95066, USA",
-          "locality": undefined,
-          "name": "14 Victor Sq",
-          "neighbourhood": "",
-          "region": "California",
-        },
         "type": "point",
+      },
+      "properties": Object {
+        "country_a": "USA",
+        "county": "Santa Cruz County",
+        "label": "14 Victor Sq, Scotts Valley, CA, 95066, USA",
+        "locality": undefined,
+        "name": "14 Victor Sq",
+        "neighbourhood": "",
+        "region": "California",
       },
       "type": "feature",
     },
@@ -93,3 +93,115 @@ Object {
 `;
 
 exports[`basic reverse request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=-122.006443%2C37.06146&maxLocations=10&f=json"`;
+
+exports[`basic search g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          44.29358000000008,
+          -68.28902999999997,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 1,
+        "country_a": undefined,
+        "county": "Hancock County",
+        "label": "123 Main Street, 123 Main St, Northeast Harbor, ME, 04662, USA",
+        "locality": undefined,
+        "name": "123 Main Street",
+        "neighbourhood": undefined,
+        "region": "Maine",
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -37.552359999999965,
+          175.91785000000004,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.7440000000000001,
+        "country_a": undefined,
+        "county": "",
+        "label": "The 123 Mart, Main Rd, Katikati, 3129, NZL",
+        "locality": undefined,
+        "name": "The 123 Mart",
+        "neighbourhood": undefined,
+        "region": "",
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          42.01650127782905,
+          -93.16481632584107,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.6713,
+        "country_a": undefined,
+        "county": "Marshall County",
+        "label": "123 W Main St, State Center, IA, 50247, USA",
+        "locality": undefined,
+        "name": "123 W Main St",
+        "neighbourhood": undefined,
+        "region": "Iowa",
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          42.016789740145164,
+          -93.16319981148884,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.6713,
+        "country_a": undefined,
+        "county": "Marshall County",
+        "label": "123 E Main St, State Center, IA, 50247, USA",
+        "locality": undefined,
+        "name": "123 E Main St",
+        "neighbourhood": undefined,
+        "region": "Iowa",
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          52.121028096728054,
+          7.554969892325715,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.604,
+        "country_a": undefined,
+        "county": "ST",
+        "label": "Mainstraße, 48268, Greven, Reckenfeld, Nordrhein-Westfalen, DEU",
+        "locality": undefined,
+        "name": "Mainstraße",
+        "neighbourhood": undefined,
+        "region": "Nordrhein-Westfalen",
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "text": "123 main st",
+  },
+}
+`;
+
+exports[`basic search request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?outFields=*&maxLocations=10&SingleLine=123%20main%20st&f=json"`;

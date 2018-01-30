@@ -75,9 +75,11 @@ export function autocomplete ({
 }): Promise<BaseResponse> {
   const geocoder = getGeocoder(clientId, clientSecret, url)
   const options = {}
+
   if (focusPoint) {
     options.location = lonlat.toString(focusPoint)
   }
+
   if (boundary) {
     options.searchExtent = boundaryToSearchExtent(boundary)
   }
@@ -103,7 +105,7 @@ export function autocomplete ({
  * @param {Object} $0
  * @param {string} [$0.clientId]
  * @param {string} [$0.clientSecret]
- * @param {string} [$0.forStorage=false]        Specifies whether result is inteded to be stored
+ * @param {boolean} [$0.forStorage=false]        Specifies whether result is inteded to be stored
  * @param {{lat: number, lon: number}} $0.point Point to reverse geocode
  * @param {string} [$0.url]                     optional URL to override ESRI reverseGeocode endpoint
  * @return {Promise}                            A Promise that'll get resolved with reverse geocode result
@@ -136,16 +138,16 @@ export function reverse ({
               response.location.y,
               response.location.x
             ],
-            properties: {
-              name: response.address.ShortLabel,
-              county: response.address.Subregion,
-              neighbourhood: response.address.Neighborhood,
-              region: response.address.Region,
-              locality: response.address.city,
-              country_a: response.address.CountryCode,
-              label: response.address.LongLabel
-            },
             type: 'point'
+          },
+          properties: {
+            country_a: response.address.CountryCode,
+            county: response.address.Subregion,
+            label: response.address.LongLabel,
+            locality: response.address.city,
+            name: response.address.ShortLabel,
+            neighbourhood: response.address.Neighborhood,
+            region: response.address.Region
           },
           type: 'feature'
         }],
@@ -154,19 +156,96 @@ export function reverse ({
     })
 }
 
+/**
+ * Search for an address using
+ * ESRI's {@link https://developers.arcgis.com/rest/geocode/api-reference/geocoding-find-address-candidates.htm|findAddressCandidates}
+ * service.
+ *
+ * @param {Object} $0
+ * @param {string} [$0.clientId]
+ * @param {string} [$0.clientSecret]
+ * @param  {Object} [$0.boundary]
+ * @param  {Object} [$0.focusPoint]
+ * @param {boolean} [$0.forStorage=false]       Specifies whether result is inteded to be stored
+ * @param {string} [$0.magicKey]                magicKey to use in searching as obtained from `suggest` results
+ * @param {number} [$0.size=10]
+ * @param {string} $0.text                      The address text to query for
+ * @param {string} [$0.url]                     optional URL to override ESRI reverseGeocode endpoint
+ * @return {Promise}                            A Promise that'll get resolved with search result
+ */
 export function search ({
   clientId,
   clientSecret,
   boundary,
   focusPoint,
+  forStorage = false,
+  magicKey,
   size = 10,
   text,
   url
 }: BaseQuery & {
   boundary?: Boundary,
   focusPoint?: any,
+  forStorage?: boolean,
+  magicKey?: string,
   size?: number,
   text: string,
 }): Promise<BaseResponse> {
-  return Promise.resolve({ query: text })
+  const geocoder = getGeocoder(clientId, clientSecret, url)
+  const options = {}
+  options.outFields = '*'
+
+  if (boundary) {
+    options.searchExtent = boundaryToSearchExtent(boundary)
+  }
+
+  if (focusPoint) {
+    options.location = lonlat.toString(focusPoint)
+  }
+
+  if (forStorage) {
+    options.forStorage = true
+  }
+
+  if (magicKey) {
+    options.magicKey = magicKey
+  }
+
+  if (size) {
+    options.maxLocations = size
+  }
+
+  // make request to arcgis
+  return geocoder.findAddressCandidates(text, options)
+    .then(response => {
+      // translate response
+      // ArcGIS returns only a single response for reverse geocoding
+      return {
+        features: response.candidates.map(candidate => {
+          return {
+            geometry: {
+              coordinates: [
+                candidate.location.y,
+                candidate.location.x
+              ],
+              type: 'point'
+            },
+            properties: {
+              confidence: candidate.attributes.Score / 100,
+              country_a: candidate.attributes.CountryCode,
+              county: candidate.attributes.Subregion,
+              label: candidate.attributes.LongLabel,
+              locality: candidate.attributes.city,
+              name: candidate.attributes.ShortLabel,
+              neighbourhood: candidate.attributes.Neighborhood,
+              region: candidate.attributes.Region
+            },
+            type: 'feature'
+          }
+        }),
+        query: {
+          text
+        }
+      }
+    })
 }

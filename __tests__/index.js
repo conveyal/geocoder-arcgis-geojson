@@ -2,9 +2,10 @@
 
 import nock from 'nock'
 
-import {autocomplete, reverse} from '../index'
+import {autocomplete, reverse, search} from '../index'
 
 const mockReverseResult = require('./mock-reverse-result.json')
+const mockSearchResult = require('./mock-search-result.json')
 const mockSuggestResult = require('./mock-suggest-result.json')
 
 describe('geocoder-arcgis-geojson', () => {
@@ -40,6 +41,22 @@ describe('geocoder-arcgis-geojson', () => {
         }
       })
       expect(result).toMatchSnapshot('basic reverse g-a-g response')
+    })
+  })
+
+  describe('search', () => {
+    it('should make basic search query', async () => {
+      nock('https://geocode.arcgis.com/')
+        .get(/arcgis\/rest\/services\/World\/GeocodeServer\/findAddressCandidates/)
+        .reply(200, (uri, requestBody) => {
+          expect(uri).toMatchSnapshot('basic search request uri')
+          return mockSearchResult
+        })
+
+      const result = await search({
+        text: '123 main st'
+      })
+      expect(result).toMatchSnapshot('basic search g-a-g response')
     })
   })
 })
