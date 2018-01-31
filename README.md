@@ -7,6 +7,8 @@ Isomorphic geocoding for reuse across our JavaScript libraries. This library is 
 
 ## Examples
 
+All API methods (except autocomplete) accept the options `clientId`, `clientSecret` and `forStorage`.  When using `forStorage`, the `clientId` and `clientSecret` options are required.
+
 ### `Autocomplete`
 
 ```js
@@ -53,23 +55,16 @@ reverse({
 import {search} from 'isomorphic-mapzen-search'
 
 search({
-  apiKey: MAPZEN_API_KEY,
   text: '1301 U Street NW, Washington, DC',
   focusPoint: {lat: 39.7691, lon: -86.1570},
   boundary: {
-    country: 'US',
     rect: {
       minLon: minLon,
       minLat: minLat,
       maxLon: maxLon,
       maxLat: maxLat
-    },
-    circle: {
-      centerPoint: centerLonLat,
-      radius: 35 // kilometers
     }
-  },
-  format: false // keep as returned GeoJSON
+  }
 }).then((geojson) => {
   console.log(geojson)
 }).catch((err) => {
@@ -98,11 +93,11 @@ of address suggestions and corresponding magicKeys
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
-    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**
+    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**
     -   `$0.text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** query text
     -   `$0.url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional URL to override ESRI suggest endpoint
 
@@ -118,9 +113,9 @@ service.
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
     -   `$0.forStorage` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Specifies whether result is inteded to be stored (optional, default `false`)
     -   `$0.point` **{lat: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), lon: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}** Point to reverse geocode
     -   `$0.url` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional URL to override ESRI reverseGeocode endpoint
@@ -137,11 +132,11 @@ service.
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
-    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+    -   `$0.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+    -   `$0.clientSecret` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+    -   `$0.boundary` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**
+    -   `$0.focusPoint` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**
     -   `$0.forStorage` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Specifies whether result is inteded to be stored (optional, default `false`)
     -   `$0.magicKey` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** magicKey to use in searching as obtained from `suggest` results
     -   `$0.size` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**  (optional, default `10`)
