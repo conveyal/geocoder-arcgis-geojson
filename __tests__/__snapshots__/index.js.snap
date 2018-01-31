@@ -68,8 +68,8 @@ Object {
     Object {
       "geometry": Object {
         "coordinates": Array [
-          37.060855792976916,
           -122.00718855545652,
+          37.060855792976916,
         ],
         "type": "point",
       },
@@ -100,19 +100,20 @@ Object {
     Object {
       "geometry": Object {
         "coordinates": Array [
-          44.29358000000008,
           -68.28902999999997,
+          44.29358000000008,
         ],
         "type": "point",
       },
       "properties": Object {
         "confidence": 1,
-        "country_a": undefined,
+        "country": "USA",
+        "country_a": "USA",
         "county": "Hancock County",
         "label": "123 Main Street, 123 Main St, Northeast Harbor, ME, 04662, USA",
-        "locality": undefined,
+        "locality": "Northeast Harbor",
         "name": "123 Main Street",
-        "neighbourhood": undefined,
+        "neighbourhood": "",
         "region": "Maine",
       },
       "type": "feature",
@@ -120,19 +121,20 @@ Object {
     Object {
       "geometry": Object {
         "coordinates": Array [
-          -37.552359999999965,
           175.91785000000004,
+          -37.552359999999965,
         ],
         "type": "point",
       },
       "properties": Object {
         "confidence": 0.7440000000000001,
-        "country_a": undefined,
+        "country": "NZL",
+        "country_a": "NZL",
         "county": "",
         "label": "The 123 Mart, Main Rd, Katikati, 3129, NZL",
-        "locality": undefined,
+        "locality": "Katikati",
         "name": "The 123 Mart",
-        "neighbourhood": undefined,
+        "neighbourhood": "Katikati",
         "region": "",
       },
       "type": "feature",
@@ -140,19 +142,20 @@ Object {
     Object {
       "geometry": Object {
         "coordinates": Array [
-          42.01650127782905,
           -93.16481632584107,
+          42.01650127782905,
         ],
         "type": "point",
       },
       "properties": Object {
         "confidence": 0.6713,
-        "country_a": undefined,
+        "country": "USA",
+        "country_a": "USA",
         "county": "Marshall County",
         "label": "123 W Main St, State Center, IA, 50247, USA",
-        "locality": undefined,
+        "locality": "State Center",
         "name": "123 W Main St",
-        "neighbourhood": undefined,
+        "neighbourhood": "",
         "region": "Iowa",
       },
       "type": "feature",
@@ -160,19 +163,20 @@ Object {
     Object {
       "geometry": Object {
         "coordinates": Array [
-          42.016789740145164,
           -93.16319981148884,
+          42.016789740145164,
         ],
         "type": "point",
       },
       "properties": Object {
         "confidence": 0.6713,
-        "country_a": undefined,
+        "country": "USA",
+        "country_a": "USA",
         "county": "Marshall County",
         "label": "123 E Main St, State Center, IA, 50247, USA",
-        "locality": undefined,
+        "locality": "State Center",
         "name": "123 E Main St",
-        "neighbourhood": undefined,
+        "neighbourhood": "",
         "region": "Iowa",
       },
       "type": "feature",
@@ -180,19 +184,20 @@ Object {
     Object {
       "geometry": Object {
         "coordinates": Array [
-          52.121028096728054,
           7.554969892325715,
+          52.121028096728054,
         ],
         "type": "point",
       },
       "properties": Object {
         "confidence": 0.604,
-        "country_a": undefined,
+        "country": "DEU",
+        "country_a": "DEU",
         "county": "ST",
         "label": "Mainstraße, 48268, Greven, Reckenfeld, Nordrhein-Westfalen, DEU",
-        "locality": undefined,
+        "locality": "Greven",
         "name": "Mainstraße",
-        "neighbourhood": undefined,
+        "neighbourhood": "",
         "region": "Nordrhein-Westfalen",
       },
       "type": "feature",

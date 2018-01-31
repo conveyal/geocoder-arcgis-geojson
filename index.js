@@ -134,10 +134,7 @@ export function reverse ({
       return {
         features: [{
           geometry: {
-            coordinates: [
-              response.location.y,
-              response.location.x
-            ],
+            coordinates: lonlat.toCoordinates(response.location),
             type: 'point'
           },
           properties: {
@@ -224,10 +221,7 @@ export function search ({
         features: response.candidates.map(candidate => {
           return {
             geometry: {
-              coordinates: [
-                candidate.location.y,
-                candidate.location.x
-              ],
+              coordinates: lonlat.toCoordinates(candidate.location),
               type: 'point'
             },
             properties: {
