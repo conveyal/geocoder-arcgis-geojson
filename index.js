@@ -232,12 +232,13 @@ export function search ({
             },
             properties: {
               confidence: candidate.attributes.Score / 100,
-              country_a: candidate.attributes.CountryCode,
+              country: candidate.attributes.Country,
+              country_a: candidate.attributes.Country,
               county: candidate.attributes.Subregion,
               label: candidate.attributes.LongLabel,
-              locality: candidate.attributes.city,
+              locality: candidate.attributes.City,
               name: candidate.attributes.ShortLabel,
-              neighbourhood: candidate.attributes.Neighborhood,
+              neighbourhood: candidate.attributes.Nbrhd,
               region: candidate.attributes.Region
             },
             type: 'feature'
