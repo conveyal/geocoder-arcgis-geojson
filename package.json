@@ -1,5 +1,5 @@
 {
-  "name": "geocoder-arcgis-geojson",
+  "name": "@conveyal/geocoder-arcgis-geojson",
   "version": "0.0.0",
   "description": "Return argis geocode results as geojson",
   "main": "./build/index",
