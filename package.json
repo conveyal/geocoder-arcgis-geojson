@@ -1,6 +1,6 @@
 {
   "name": "@conveyal/geocoder-arcgis-geojson",
-  "version": "0.0.0",
+  "version": "0.0.0-semantically-released",
   "description": "Return argis geocode results as geojson",
   "main": "./build/index",
   "repository": "https://github.com/conveyal/geocoder-arcgis-geojson.git",
