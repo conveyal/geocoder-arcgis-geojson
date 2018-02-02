@@ -3,7 +3,7 @@
 import GeocoderArcGIS from 'geocoder-arcgis'
 import lonlat from '@conveyal/lonlat'
 
-let arcGisGeocoder
+const arcGisGeocoders = {}
 
 type Boundary = {
   rect: {
@@ -33,17 +33,29 @@ function boundaryToSearchExtent (boundary: Boundary): string {
   ].join(',')
 }
 
+/**
+ * To make flow happy
+ */
+function coerceNullToString (s: ?string) {
+  return s || ''
+}
+
 function getGeocoder (clientId: ?string, clientSecret: ?string, endpoint: ?string) {
-  // assume same clientId/clientSecret is used each time
-  if (!arcGisGeocoder) {
-    arcGisGeocoder = new GeocoderArcGIS({
+  const geocoderKey = [
+    clientId,
+    clientSecret,
+    endpoint
+  ].map(coerceNullToString).join('-')
+
+  if (!arcGisGeocoders[geocoderKey]) {
+    arcGisGeocoders[geocoderKey] = new GeocoderArcGIS({
       client_id: clientId,
       client_secret: clientSecret,
       endpoint
     })
   }
 
-  return arcGisGeocoder
+  return arcGisGeocoders[geocoderKey]
 }
 
 /**
