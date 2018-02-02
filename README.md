@@ -1,6 +1,6 @@
-# geocoder-argis-geojson
+# geocoder-arcgis-geojson
 
-Isomorphic geocoding for reuse across our JavaScript libraries. This library is built to match the API of [Isomorphic Mapzen Search](https://github.com/conveyal/isomorphic-mapzen-search/) in order to facilitate a quick conversion of our applications to use ESRI's geocoder.  Read the ESRI docs [here](https://developers.arcgis.com/labs/rest/get-an-access-token/). Coordinates must be anything that can be parsed by [lonlng](https://github.com/conveyal/lonlng).
+Isomorphic geocoding for reuse across our JavaScript libraries. This library is built to match the API of [geocoder-arcgis](https://www.npmjs.com/package/geocoder-arcgis) in order to facilitate a quick conversion of our applications to use ESRI's geocoder.  Read the ESRI docs [here](https://developers.arcgis.com/labs/rest/get-an-access-token/). Coordinates must be anything that can be parsed by [lonlng](https://github.com/conveyal/lonlng).
 
 -   [Examples](#examples)
 -   [API Documentation](#api)
