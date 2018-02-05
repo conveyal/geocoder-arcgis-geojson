@@ -12,7 +12,7 @@ All API methods (except autocomplete) accept the options `clientId`, `clientSecr
 ### `Autocomplete`
 
 ```js
-import {autocomplete} from 'isomorphic-mapzen-search'
+import {autocomplete} from 'geocoder-arcgis-geojson'
 
 autocomplete({
   boundary: {
@@ -32,10 +32,38 @@ autocomplete({
 })
 ```
 
+### `Bulk`
+
+```js
+import {autocomplete} from 'geocoder-arcgis-geojson'
+
+bulk({
+  addresses: [
+    '1301 U Str',
+    '123 Main St'
+  ],
+  boundary: {
+    rect: {
+      minLon: minLon,
+      minLat: minLat,
+      maxLon: maxLon,
+      maxLat: maxLat
+    }
+  },
+  clientId: 'secret',
+  clientSecret: 'secret',
+  focusPoint: {lat: 39.7691, lon: -86.1570}
+}).then((result) => {
+  console.log(result)
+}).catch((err) => {
+  console.error(err)
+})
+```
+
 ### `Reverse`
 
 ```js
-import {reverse} from 'isomorphic-mapzen-search'
+import {reverse} from 'geocoder-arcgis-geojson'
 
 reverse({
   point: {
@@ -52,7 +80,7 @@ reverse({
 ### `search({apiKey, text, ...options})`
 
 ```js
-import {search} from 'isomorphic-mapzen-search'
+import {search} from 'geocoder-arcgis-geojson'
 
 search({
   text: '1301 U Street NW, Washington, DC',
@@ -85,7 +113,7 @@ search({
 
 ### autocomplete
 
-[index.js:94-128](https://github.com/conveyal/geocoder-arcgis-geojson/blob/8d90b1c38b6156312cf9e47e9d541b7a56015a75/index.js#L94-L128 "Source code on GitHub")
+[index.js:94-128](https://github.com/conveyal/geocoder-arcgis-geojson/blob/c4b5701a0403d4a80761b1528624bd7795e0dcfd/index.js#L94-L128 "Source code on GitHub")
 
 Search for and address using
 ESRI's [suggest](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-suggest.htm)
@@ -106,7 +134,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### bulk
 
-[index.js:144-195](https://github.com/conveyal/geocoder-arcgis-geojson/blob/8d90b1c38b6156312cf9e47e9d541b7a56015a75/index.js#L144-L195 "Source code on GitHub")
+[index.js:144-195](https://github.com/conveyal/geocoder-arcgis-geojson/blob/c4b5701a0403d4a80761b1528624bd7795e0dcfd/index.js#L144-L195 "Source code on GitHub")
 
 Bulk geocode a list of addresses using
 ESRI's [geocodeAddresses](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-geocode-addresses.htm)
@@ -126,7 +154,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### reverse
 
-[index.js:210-251](https://github.com/conveyal/geocoder-arcgis-geojson/blob/8d90b1c38b6156312cf9e47e9d541b7a56015a75/index.js#L210-L251 "Source code on GitHub")
+[index.js:210-251](https://github.com/conveyal/geocoder-arcgis-geojson/blob/c4b5701a0403d4a80761b1528624bd7795e0dcfd/index.js#L210-L251 "Source code on GitHub")
 
 Reverse geocode using
 ESRI's [reverseGeocode](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-reverse-geocode.htm)
@@ -145,7 +173,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ### search
 
-[index.js:270-324](https://github.com/conveyal/geocoder-arcgis-geojson/blob/8d90b1c38b6156312cf9e47e9d541b7a56015a75/index.js#L270-L324 "Source code on GitHub")
+[index.js:270-324](https://github.com/conveyal/geocoder-arcgis-geojson/blob/c4b5701a0403d4a80761b1528624bd7795e0dcfd/index.js#L270-L324 "Source code on GitHub")
 
 Search for an address using
 ESRI's [findAddressCandidates](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-find-address-candidates.htm)
