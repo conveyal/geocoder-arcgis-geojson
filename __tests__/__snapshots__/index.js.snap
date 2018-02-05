@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic autocomplete g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9NjI3MjE4MiNsbmc9MzQjcGw9MjE2Mzc2MSNsYnM9MTQ6NDYxMTQz",
+      "text": "123 Main Street, 123 Main St, Northeast Harbor, ME, 04662, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9OTQ3MTgjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njc1",
+      "text": "123 Main St E, Rock Hill, SC, 29730, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9Njg5NjAjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njc0",
+      "text": "123 Main St, Brunson, SC, 29911, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9NjY3MzYjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njc0",
+      "text": "123 Main St, Greenville, SC, 29601, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9OTQyMDQjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njg0",
+      "text": "123 Main St W, Rock Hill, SC, 29730, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9NzI1NjgjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njc0",
+      "text": "123 Main St, Andrews, SC, 29510, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9MTA5NjIzI2xuZz0zNCNobj0xMjMjbGJzPTEwOTo0MDEwNTY3NA==",
+      "text": "123 Main St, Barnwell, SC, 29812, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9MTEwMDgxI2xuZz0zNCNobj0xMjMjbGJzPTEwOTo0MDEwNTY3NA==",
+      "text": "123 Main St, Blackville, SC, 29817, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9MjYyODcjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njc0",
+      "text": "123 Main St, Blythewood, SC, 29016, USA",
+    },
+    Object {
+      "isCollection": false,
+      "magicKey": "dHA9MCNsb2M9MTA5MzgjbG5nPTM0I2huPTEyMyNsYnM9MTA5OjQwMTA1Njc0",
+      "text": "123 Main St, Chesnee, SC, 29323, USA",
+    },
+  ],
+  "query": Object {
+    "text": "123 main st",
+  },
+}
+`;
+
+exports[`basic autocomplete request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/suggest?text=123%20main%20st&outFields=*&maxSuggestions=10&f=json"`;
+
+exports[`basic bulk g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -68.28902999999997,
+          44.29358000000008,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 1,
+        "country": "USA",
+        "country_a": "USA",
+        "county": "Hancock County",
+        "label": "123 Main Street, 123 Main St, Northeast Harbor, ME, 04662, USA",
+        "locality": "Northeast Harbor",
+        "name": "123 Main Street",
+        "neighbourhood": "",
+        "region": "Maine",
+        "resultId": 0,
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "addresses": Array [
+      "123 main st",
+    ],
+  },
+}
+`;
+
+exports[`basic bulk request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/geocodeAddresses"`;
+
+exports[`basic reverse g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -122.00718855545652,
+          37.060855792976916,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "country_a": "USA",
+        "county": "Santa Cruz County",
+        "label": "14 Victor Sq, Scotts Valley, CA, 95066, USA",
+        "locality": undefined,
+        "name": "14 Victor Sq",
+        "neighbourhood": "",
+        "region": "California",
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "lat": 37.06146,
+    "lon": -122.006443,
+  },
+}
+`;
+
+exports[`basic reverse request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/reverseGeocode?location=-122.006443%2C37.06146&maxLocations=10&f=json"`;
+
+exports[`basic search g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -68.28902999999997,
+          44.29358000000008,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 1,
+        "country": "USA",
+        "country_a": "USA",
+        "county": "Hancock County",
+        "label": "123 Main Street, 123 Main St, Northeast Harbor, ME, 04662, USA",
+        "locality": "Northeast Harbor",
+        "name": "123 Main Street",
+        "neighbourhood": "",
+        "region": "Maine",
+        "resultId": undefined,
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          175.91785000000004,
+          -37.552359999999965,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.7440000000000001,
+        "country": "NZL",
+        "country_a": "NZL",
+        "county": "",
+        "label": "The 123 Mart, Main Rd, Katikati, 3129, NZL",
+        "locality": "Katikati",
+        "name": "The 123 Mart",
+        "neighbourhood": "Katikati",
+        "region": "",
+        "resultId": undefined,
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -93.16481632584107,
+          42.01650127782905,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.6713,
+        "country": "USA",
+        "country_a": "USA",
+        "county": "Marshall County",
+        "label": "123 W Main St, State Center, IA, 50247, USA",
+        "locality": "State Center",
+        "name": "123 W Main St",
+        "neighbourhood": "",
+        "region": "Iowa",
+        "resultId": undefined,
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -93.16319981148884,
+          42.016789740145164,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.6713,
+        "country": "USA",
+        "country_a": "USA",
+        "county": "Marshall County",
+        "label": "123 E Main St, State Center, IA, 50247, USA",
+        "locality": "State Center",
+        "name": "123 E Main St",
+        "neighbourhood": "",
+        "region": "Iowa",
+        "resultId": undefined,
+      },
+      "type": "feature",
+    },
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          7.554969892325715,
+          52.121028096728054,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0.604,
+        "country": "DEU",
+        "country_a": "DEU",
+        "county": "ST",
+        "label": "Mainstraße, 48268, Greven, Reckenfeld, Nordrhein-Westfalen, DEU",
+        "locality": "Greven",
+        "name": "Mainstraße",
+        "neighbourhood": "",
+        "region": "Nordrhein-Westfalen",
+        "resultId": undefined,
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "text": "123 main st",
+  },
+}
+`;
+
+exports[`basic search request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?outFields=*&maxLocations=10&SingleLine=123%20main%20st&f=json"`;
