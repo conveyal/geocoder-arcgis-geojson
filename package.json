@@ -33,6 +33,6 @@
     "flow-bin": "0.44.0",
     "mastarm": "3",
     "nock": "^9.1.6",
-    "semantic-release": "11"
+    "semantic-release": "^6.3.6"
   }
 }
