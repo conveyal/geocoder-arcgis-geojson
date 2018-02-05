@@ -62,6 +62,42 @@ Object {
 
 exports[`basic autocomplete request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/suggest?text=123%20main%20st&outFields=*&maxSuggestions=10&f=json"`;
 
+exports[`basic bulk g-a-g response 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          -68.28902999999997,
+          44.29358000000008,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 1,
+        "country": "USA",
+        "country_a": "USA",
+        "county": "Hancock County",
+        "label": "123 Main Street, 123 Main St, Northeast Harbor, ME, 04662, USA",
+        "locality": "Northeast Harbor",
+        "name": "123 Main Street",
+        "neighbourhood": "",
+        "region": "Maine",
+        "resultId": 0,
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "addresses": Array [
+      "123 main st",
+    ],
+  },
+}
+`;
+
+exports[`basic bulk request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/geocodeAddresses"`;
+
 exports[`basic reverse g-a-g response 1`] = `
 Object {
   "features": Array [
@@ -115,6 +151,7 @@ Object {
         "name": "123 Main Street",
         "neighbourhood": "",
         "region": "Maine",
+        "resultId": undefined,
       },
       "type": "feature",
     },
@@ -136,6 +173,7 @@ Object {
         "name": "The 123 Mart",
         "neighbourhood": "Katikati",
         "region": "",
+        "resultId": undefined,
       },
       "type": "feature",
     },
@@ -157,6 +195,7 @@ Object {
         "name": "123 W Main St",
         "neighbourhood": "",
         "region": "Iowa",
+        "resultId": undefined,
       },
       "type": "feature",
     },
@@ -178,6 +217,7 @@ Object {
         "name": "123 E Main St",
         "neighbourhood": "",
         "region": "Iowa",
+        "resultId": undefined,
       },
       "type": "feature",
     },
@@ -199,6 +239,7 @@ Object {
         "name": "Mainstraße",
         "neighbourhood": "",
         "region": "Nordrhein-Westfalen",
+        "resultId": undefined,
       },
       "type": "feature",
     },

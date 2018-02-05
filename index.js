@@ -33,19 +33,12 @@ function boundaryToSearchExtent (boundary: Boundary): string {
   ].join(',')
 }
 
-/**
- * To make flow happy
- */
-function coerceNullToString (s: ?string) {
-  return s || ''
-}
-
 function getGeocoder (clientId: ?string, clientSecret: ?string, endpoint: ?string) {
   const geocoderKey = [
     clientId,
     clientSecret,
     endpoint
-  ].map(coerceNullToString).join('-')
+  ].map(s => String(s)).join('-')
 
   if (!arcGisGeocoders[geocoderKey]) {
     arcGisGeocoders[geocoderKey] = new GeocoderArcGIS({
@@ -56,6 +49,31 @@ function getGeocoder (clientId: ?string, clientSecret: ?string, endpoint: ?strin
   }
 
   return arcGisGeocoders[geocoderKey]
+}
+
+/**
+ * Translate arcgis candidate json to geojson
+ */
+function candidateToGeojson (candidate) {
+  return {
+    geometry: {
+      coordinates: lonlat.toCoordinates(candidate.location),
+      type: 'point'
+    },
+    properties: {
+      confidence: candidate.attributes.Score / 100,
+      country: candidate.attributes.Country,
+      country_a: candidate.attributes.Country,
+      county: candidate.attributes.Subregion,
+      label: candidate.attributes.LongLabel,
+      locality: candidate.attributes.City,
+      name: candidate.attributes.ShortLabel,
+      neighbourhood: candidate.attributes.Nbrhd,
+      region: candidate.attributes.Region,
+      resultId: candidate.attributes.ResultID  // this only appears in bulk geocode results
+    },
+    type: 'feature'
+  }
 }
 
 /**
@@ -104,6 +122,73 @@ export function autocomplete ({
         features: response.suggestions,
         query: {
           text
+        }
+      }
+    })
+}
+
+/**
+ * Bulk geocode a list of addresses using
+ * ESRI's {@link https://developers.arcgis.com/rest/geocode/api-reference/geocoding-geocode-addresses.htm|geocodeAddresses}
+ * service.
+ *
+ * @param {Object} $0
+ * @param  {Array} $0.addresses     Can be array of strings or objects.  Strings can be addresses or coordinates in the form `lon,lat`
+ * @param  {string} $0.clientId
+ * @param  {string} $0.clientSecret
+ * @param  {Object} [$0.boundary]
+ * @param  {Object} [$0.focusPoint]
+ * @param  {string} [$0.url]
+ * @return {Promise}                A Promise that'll get resolved with the bulk geocode result
+ */
+export function bulk ({
+  addresses,
+  clientId,
+  clientSecret,
+  boundary,
+  focusPoint,
+  url
+}: BaseQuery & {
+  addresses: Array<any>,
+  boundary?: Boundary,
+  focusPoint?: any
+}): Promise<BaseResponse> {
+  const geocoder = getGeocoder(clientId, clientSecret, url)
+  let addressesQuery = [...addresses]
+  const options = {}
+
+  if (boundary || focusPoint) {
+    const addressOptions = {}
+
+    if (boundary) {
+      addressOptions.searchExtent = boundaryToSearchExtent(boundary)
+    }
+
+    if (focusPoint) {
+      addressOptions.location = lonlat.toString(focusPoint)
+    }
+
+    addressesQuery = addresses.map(address => {
+      // add in searchExtent and/or location to each address query
+      if (typeof address === 'string') {
+        address = {
+          address
+        }
+      }
+
+      return Object.assign({}, addressOptions, address)
+    })
+  }
+
+  // make request to arcgis
+  return geocoder.geocodeAddresses(addressesQuery, options)
+    .then(response => {
+      // translate response
+      // ArcGIS returns only a single response for reverse geocoding
+      return {
+        features: response.locations.map(candidateToGeojson),
+        query: {
+          addresses: addressesQuery
         }
       }
     })
@@ -230,26 +315,7 @@ export function search ({
       // translate response
       // ArcGIS returns only a single response for reverse geocoding
       return {
-        features: response.candidates.map(candidate => {
-          return {
-            geometry: {
-              coordinates: lonlat.toCoordinates(candidate.location),
-              type: 'point'
-            },
-            properties: {
-              confidence: candidate.attributes.Score / 100,
-              country: candidate.attributes.Country,
-              country_a: candidate.attributes.Country,
-              county: candidate.attributes.Subregion,
-              label: candidate.attributes.LongLabel,
-              locality: candidate.attributes.City,
-              name: candidate.attributes.ShortLabel,
-              neighbourhood: candidate.attributes.Nbrhd,
-              region: candidate.attributes.Region
-            },
-            type: 'feature'
-          }
-        }),
+        features: response.candidates.map(candidateToGeojson),
         query: {
           text
         }
