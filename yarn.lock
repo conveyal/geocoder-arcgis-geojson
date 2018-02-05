@@ -3487,17 +3487,17 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
 
-form-data@~2.1.1:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.1.4.tgz#33c183acf193276ecaa98143a69e94bfee1750d1"
+form-data@^2.3.1, form-data@~2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.1.tgz#6fb94fbd71885306d73d15cc497fe4cc4ecd44bf"
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-form-data@~2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.1.tgz#6fb94fbd71885306d73d15cc497fe4cc4ecd44bf"
+form-data@~2.1.1:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.1.4.tgz#33c183acf193276ecaa98143a69e94bfee1750d1"
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.5"
@@ -3623,12 +3623,13 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-geocoder-arcgis@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/geocoder-arcgis/-/geocoder-arcgis-2.0.3.tgz#9500ebc9a249ad802062c9ffae067e86f6f00ff2"
+geocoder-arcgis@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/geocoder-arcgis/-/geocoder-arcgis-2.0.4.tgz#20dc83ebd33b62b509b4d80c19c4e1e2b0113e23"
   dependencies:
     es6-promise "^4.1.1"
     fetch-everywhere "^1.0.5"
+    form-data "^2.3.1"
     lodash.get "^4.4.2"
     lodash.isobject "^3.0.2"
     lodash.isstring "^4.0.1"
