@@ -55,6 +55,28 @@ function getGeocoder (clientId: ?string, clientSecret: ?string, endpoint: ?strin
  * Translate arcgis candidate json to geojson
  */
 function candidateToGeojson (candidate) {
+  if (!candidate.location) {
+    // no result found for this candidate
+    return {
+      geometry: {
+        coordinates: [0, 0],
+        type: 'point'
+      },
+      properties: {
+        confidence: 0,
+        country: '',
+        country_a: '',
+        county: '',
+        label: 'Address not found',
+        locality: '',
+        name: '',
+        neighbourhood: '',
+        region: '',
+        resultId: candidate.attributes.ResultID  // this only appears in bulk geocode results
+      },
+      type: 'feature'
+    }
+  }
   return {
     geometry: {
       coordinates: lonlat.toCoordinates(candidate.location),
