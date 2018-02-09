@@ -3,7 +3,10 @@
   "version": "0.0.0-semantically-released",
   "description": "Return argis geocode results as geojson",
   "main": "./build/index",
-  "repository": "https://github.com/conveyal/geocoder-arcgis-geojson.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conveyal/geocoder-arcgis-geojson.git"
+  },
   "author": "esiroky@conveyal.com",
   "license": "MIT",
   "private": false,
@@ -33,6 +36,10 @@
     "flow-bin": "0.44.0",
     "mastarm": "3",
     "nock": "^9.1.6",
-    "semantic-release": "11"
-  }
+    "semantic-release": "^6.3.6"
+  },
+  "bugs": {
+    "url": "https://github.com/conveyal/geocoder-arcgis-geojson/issues"
+  },
+  "homepage": "https://github.com/conveyal/geocoder-arcgis-geojson"
 }
