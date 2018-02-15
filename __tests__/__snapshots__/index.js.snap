@@ -96,8 +96,6 @@ Object {
 }
 `;
 
-exports[`basic bulk request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/geocodeAddresses"`;
-
 exports[`basic reverse g-a-g response 1`] = `
 Object {
   "features": Array [
@@ -251,3 +249,37 @@ Object {
 `;
 
 exports[`basic search request uri 1`] = `"/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?outFields=*&maxLocations=10&SingleLine=123%20main%20st&f=json"`;
+
+exports[`bulk g-a-g response with no address found 1`] = `
+Object {
+  "features": Array [
+    Object {
+      "geometry": Object {
+        "coordinates": Array [
+          0,
+          0,
+        ],
+        "type": "point",
+      },
+      "properties": Object {
+        "confidence": 0,
+        "country": "",
+        "country_a": "",
+        "county": "",
+        "label": "Address not found",
+        "locality": "",
+        "name": "",
+        "neighbourhood": "",
+        "region": "",
+        "resultId": 0,
+      },
+      "type": "feature",
+    },
+  ],
+  "query": Object {
+    "addresses": Array [
+      "aefgjil",
+    ],
+  },
+}
+`;
