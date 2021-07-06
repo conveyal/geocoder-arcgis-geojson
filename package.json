@@ -31,12 +31,15 @@
     "geocoder-arcgis": "^2.0.4"
   },
   "devDependencies": {
+    "@types/geojson": "^7946.0.7",
+    "@types/node": "^16.0.0",
     "documentation": "^5.3.5",
     "eslint-plugin-jest": "^21.7.0",
     "flow-bin": "0.44.0",
     "mastarm": "3",
     "nock": "^9.1.6",
-    "semantic-release": "^6.3.6"
+    "semantic-release": "^6.3.6",
+    "typescript": "^4.3.5"
   },
   "bugs": {
     "url": "https://github.com/conveyal/geocoder-arcgis-geojson/issues"
