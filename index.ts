@@ -1,10 +1,15 @@
 import GeocoderArcGIS from 'geocoder-arcgis'
-import type { GeoJSON, Point } from 'geojson'
+import type { GeoJSON } from 'geojson'
+import { toCoordinates, toString, toPoint } from '@conveyal/lonlat'
 import type { LonLatInput } from '@conveyal/lonlat'
-import { normalize } from '@conveyal/lonlat'
+
+type Point = {
+  x: number
+  y: number
+}
 
 type GeocodersList = {
-  [key: string]: Geocoder
+  [key: string]: GeocoderArcGIS
 }
 
 type Boundary = {
@@ -16,7 +21,11 @@ type Boundary = {
   }
 }
 
-// TODO: rename?
+type Candidate = {
+  location: LonLatInput
+  attributes: Record<string, string | number>
+}
+
 type Options = {
   searchExtent?: string
   location?: string
@@ -35,6 +44,16 @@ type BaseQuery = {
   url?: string
 }
 
+type GeocoderResponse = {
+  suggestions?: string[]
+  locations?: Candidate[]
+  location?: LonLatInput
+  address?: Record<string, string>
+  candidates?: Candidate[]
+}
+
+type BaseResponse = GeoJSON.FeatureCollection
+
 const arcGisGeocoders: GeocodersList = {}
 
 function boundaryToSearchExtent(boundary: Boundary): string {
@@ -50,7 +69,7 @@ function getGeocoder(
   clientId?: string,
   clientSecret?: string,
   endpoint?: string
-): Geocoder {
+): GeocoderArcGIS {
   const geocoderKey: string = [clientId, clientSecret, endpoint]
     .map((s) => String(s))
     .join('-')
@@ -69,7 +88,7 @@ function getGeocoder(
 /**
  * Translate arcgis candidate json to geojson
  */
-function candidateToGeojson(candidate: ArcGisCandidate): GeoJSON {
+function candidateToGeojson(candidate: Candidate): GeoJSON {
   if (!candidate.location) {
     // no result found for this candidate
     return {
@@ -92,9 +111,14 @@ function candidateToGeojson(candidate: ArcGisCandidate): GeoJSON {
       type: 'Feature'
     }
   }
+
+  if (typeof candidate.attributes.Score !== 'number') {
+    candidate.attributes.Score = parseInt(candidate.attributes.Score)
+  }
+
   return {
     geometry: {
-      coordinates: lonlat.toCoordinates(candidate.location),
+      coordinates: toCoordinates(candidate.location),
       type: 'Point'
     },
     properties: {
@@ -136,11 +160,11 @@ export function autocomplete({
   text,
   url
 }: BaseQuery & Options): Promise<BaseResponse> {
-  const geocoder: Geocoder = getGeocoder(clientId, clientSecret, url)
+  const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   const options: Options = {}
 
   if (focusPoint) {
-    options.location = lonlat.toString(focusPoint)
+    options.location = toString(focusPoint)
   }
 
   if (boundary) {
@@ -180,9 +204,11 @@ export function bulk({
   clientSecret,
   focusPoint,
   url
-}: BaseQuery & Options & { addresses: Array<any> }): Promise<BaseResponse> {
-  const geocoder: Geocoder = getGeocoder(clientId, clientSecret, url)
-  let addressesQuery: Array<Array<any>> = [...addresses]
+}: BaseQuery & Options & { addresses: Array<string> }): Promise<
+  BaseResponse[]
+> {
+  const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
+  let addressesQuery: Array<string | Options> = [...addresses]
   const options: Options = {}
 
   if (boundary || focusPoint) {
@@ -193,10 +219,10 @@ export function bulk({
     }
 
     if (focusPoint) {
-      addressOptions.location = lonlat.toString(focusPoint)
+      addressOptions.location = toString(focusPoint)
     }
 
-    addressesQuery = addresses.map((address) => {
+    addressesQuery = addresses.map((address: unknown): Options => {
       // add in searchExtent and/or location to each address query
       if (typeof address === 'string') {
         address = {
@@ -244,7 +270,7 @@ export function reverse({
   url
 }: BaseQuery &
   Options & {
-    point: Point
+    point: LonLatInput
   }): Promise<BaseResponse> {
   const geocoder = getGeocoder(clientId, clientSecret, url)
   const options: Options = {}
@@ -254,7 +280,7 @@ export function reverse({
 
   // make request to arcgis
   return geocoder
-    .reverse(lonlat.toString(point), options)
+    .reverse(toString(point), options)
     .then((response: GeocoderResponse): GeoJSON | { query: Point } => {
       // translate response
       // ArcGIS returns only a single response for reverse geocoding
@@ -262,7 +288,7 @@ export function reverse({
         features: [
           {
             geometry: {
-              coordinates: lonlat.toCoordinates(response.location),
+              coordinates: toCoordinates(response.location),
               type: 'Point'
             },
             properties: {
@@ -277,7 +303,7 @@ export function reverse({
             type: 'Feature'
           }
         ],
-        query: point
+        query: toPoint(point)
       }
     })
 }
@@ -310,7 +336,7 @@ export function search({
   text,
   url
 }: BaseQuery & Options): Promise<BaseResponse> {
-  const geocoder: Geocoder = getGeocoder(clientId, clientSecret, url)
+  const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   const options: Options & { maxLocations?: number } = {}
   options.outFields = '*'
 
@@ -319,7 +345,7 @@ export function search({
   }
 
   if (focusPoint) {
-    options.location = lonlat.toString(focusPoint)
+    options.location = toString(focusPoint)
   }
 
   if (forStorage) {

@@ -1,8 +1,8 @@
 // @flow
 
-import nock from 'nock'
+import * as nock from 'nock'
 
-import { autocomplete, bulk, reverse, search } from '../index'
+import { autocomplete, bulk, reverse, search } from '../dist/index'
 
 const mockBulkResult = require('./mock-bulk-result.json')
 const mockBulkResultWithBadAddress = require('./mock-bulk-result-with-bad-address.json')

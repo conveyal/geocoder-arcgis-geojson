@@ -14,25 +14,26 @@
     "build": "tsdx build -i index.ts --target node",
     "cover": "tsdx test --coverage --coverage-paths index.ts",
     "generate-docs": "documentation readme index.ts --document-exported=true -g --section=API",
+    "jest": "yarn build && tsdx test",
     "lint": "tsdx lint __tests__ index.ts --quiet",
     "lint-docs": "documentation lint index.ts",
     "prepublish": "yarn build",
     "semantic-release": "semantic-release",
-    "test": "yarn run lint && yarn run lint-docs && tsdx test",
+    "test": "yarn run lint && yarn run lint-docs && yarn jest",
     "test-node": "tsdx test --test-environment node"
   },
   "dependencies": {
-    "@conveyal/lonlat": "^1.3.0",
+    "@conveyal/lonlat": "../lonlat",
     "eslint-config-standard-jsx": "^10.0.0",
     "geocoder-arcgis": "^2.0.5",
     "tsdx": "https://github.com/ibi-group/tsdx"
   },
   "devDependencies": {
-    "@types/geojson": "^7946.0.7",
-    "@types/node": "^16.0.0",
-    "documentation": "^5.3.5",
-    "nock": "^9.1.6",
-    "semantic-release": "^6.3.6"
+    "@types/geojson": "^7946.0.8",
+    "@types/node": "^16.3.2",
+    "documentation": "^13.2.5",
+    "nock": "^13.1.1",
+    "semantic-release": "^17.4.4"
   },
   "bugs": {
     "url": "https://github.com/conveyal/geocoder-arcgis-geojson/issues"
