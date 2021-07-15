@@ -34,4 +34,11 @@ jspm_packages/
 .yarn-integrity
 
 # built files
-build
+build/*
+dist/*
+
+# OS X
+.DS_Store
+
+# Handled by TSDX
+.eslintrc.js

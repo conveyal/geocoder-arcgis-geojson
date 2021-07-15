@@ -2,7 +2,7 @@
 
 import nock from 'nock'
 
-import {autocomplete, bulk, reverse, search} from '../index'
+import { autocomplete, bulk, reverse, search } from '../index'
 
 const mockBulkResult = require('./mock-bulk-result.json')
 const mockBulkResultWithBadAddress = require('./mock-bulk-result-with-bad-address.json')
@@ -11,20 +11,23 @@ const mockSearchResult = require('./mock-search-result.json')
 const mockSuggestResult = require('./mock-suggest-result.json')
 
 const ARCGIS_GEOCODE_URL = 'https://geocode.arcgis.com/'
-const BULK_URL = /arcgis\/rest\/services\/World\/GeocodeServer\/geocodeAddresses/
-const REVERSE_URL = /arcgis\/rest\/services\/World\/GeocodeServer\/reverseGeocode/
-const SEARCH_URL = /arcgis\/rest\/services\/World\/GeocodeServer\/findAddressCandidates/
+const BULK_URL =
+  /arcgis\/rest\/services\/World\/GeocodeServer\/geocodeAddresses/
+const REVERSE_URL =
+  /arcgis\/rest\/services\/World\/GeocodeServer\/reverseGeocode/
+const SEARCH_URL =
+  /arcgis\/rest\/services\/World\/GeocodeServer\/findAddressCandidates/
 const SUGGEST_URL = /arcgis\/rest\/services\/World\/GeocodeServer\/suggest/
 
-function nockArcGet (url: RegExp) {
+function nockArcGet(url: RegExp) {
   return nock(ARCGIS_GEOCODE_URL).get(url)
 }
 
-function nockArcPost (url: RegExp) {
+function nockArcPost(url: RegExp) {
   return nock(ARCGIS_GEOCODE_URL).post(url)
 }
 
-function snapshotUri (type: string, response: Object) {
+function snapshotUri(type: string, response) {
   return (uri, requestBody) => {
     expect(uri).toMatchSnapshot(`basic ${type} request uri`)
     return response
@@ -34,7 +37,10 @@ function snapshotUri (type: string, response: Object) {
 describe('geocoder-arcgis-geojson', () => {
   describe('autocomplete', () => {
     it('should make basic autocomplete query', async () => {
-      nockArcGet(SUGGEST_URL).reply(200, snapshotUri('autocomplete', mockSuggestResult))
+      nockArcGet(SUGGEST_URL).reply(
+        200,
+        snapshotUri('autocomplete', mockSuggestResult)
+      )
 
       const result = await autocomplete({
         text: '123 main st'
@@ -70,17 +76,22 @@ describe('geocoder-arcgis-geojson', () => {
         clientId: 'test',
         clientSecret: 'test'
       })
-      expect(result).toMatchSnapshot('bulk g-a-g response with no address found')
+      expect(result).toMatchSnapshot(
+        'bulk g-a-g response with no address found'
+      )
     })
   })
 
   describe('reverse', () => {
     it('should make basic reverse query', async () => {
-      nockArcGet(REVERSE_URL).reply(200, snapshotUri('reverse', mockReverseResult))
+      nockArcGet(REVERSE_URL).reply(
+        200,
+        snapshotUri('reverse', mockReverseResult)
+      )
 
       const result = await reverse({
         point: {
-          lat: 37.061460,
+          lat: 37.06146,
           lon: -122.006443
         }
       })
