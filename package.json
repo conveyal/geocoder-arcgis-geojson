@@ -2,7 +2,9 @@
   "name": "@conveyal/geocoder-arcgis-geojson",
   "version": "0.0.0-semantically-released",
   "description": "Return argis geocode results as geojson",
-  "main": "./build/index",
+  "main": "dist/index.js",
+  "module": "dist/geocoder-arcgis-geojson.esm.js",
+  "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/conveyal/geocoder-arcgis-geojson.git"
@@ -20,10 +22,10 @@
     "prepublish": "yarn build",
     "semantic-release": "semantic-release",
     "test": "yarn run lint && yarn run lint-docs && yarn jest",
-    "test-node": "tsdx test --test-environment node"
+    "test-node": "yarn build && tsdx test --test-environment node"
   },
   "dependencies": {
-    "@conveyal/lonlat": "../lonlat",
+    "@conveyal/lonlat": "^1.4.1",
     "eslint-config-standard-jsx": "^10.0.0",
     "geocoder-arcgis": "^2.0.5",
     "tsdx": "https://github.com/ibi-group/tsdx"
