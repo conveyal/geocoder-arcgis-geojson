@@ -27,15 +27,15 @@
   "dependencies": {
     "@conveyal/lonlat": "^1.4.1",
     "eslint-config-standard-jsx": "^10.0.0",
-    "geocoder-arcgis": "^2.0.5",
-    "tsdx": "https://github.com/ibi-group/tsdx"
+    "geocoder-arcgis": "^2.0.5"
   },
   "devDependencies": {
     "@types/geojson": "^7946.0.8",
     "@types/node": "^16.3.2",
     "documentation": "^13.2.5",
     "nock": "^13.1.1",
-    "semantic-release": "^17.4.4"
+    "semantic-release": "^17.4.4",
+    "tsdx": "https://github.com/ibi-group/tsdx"
   },
   "bugs": {
     "url": "https://github.com/conveyal/geocoder-arcgis-geojson/issues"

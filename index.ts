@@ -8,7 +8,7 @@ type Point = {
   y: number
 }
 
-type GeocodersList = {
+type GeocodersMap = {
   [key: string]: GeocoderArcGIS
 }
 
@@ -26,21 +26,9 @@ type Candidate = {
   attributes: Record<string, string | number>
 }
 
-type Options = {
-  searchExtent?: string
-  location?: string
-  forStorage?: boolean
-  outFields?: string
-  magicKey?: string
-  size?: number
-}
-
 type BaseQuery = {
-  boundary?: Boundary
   clientId?: string
   clientSecret?: string
-  focusPoint?: Point
-  text?: string
   url?: string
 }
 
@@ -52,9 +40,9 @@ type GeocoderResponse = {
   candidates?: Candidate[]
 }
 
-type BaseResponse = GeoJSON.FeatureCollection
+type BaseResponse = GeoJSON.FeatureCollection & { query: Array<string> }
 
-const arcGisGeocoders: GeocodersList = {}
+const arcGisGeocoders: GeocodersMap = {}
 
 function boundaryToSearchExtent(boundary: Boundary): string {
   return [
@@ -159,9 +147,13 @@ export function autocomplete({
   focusPoint,
   text,
   url
-}: BaseQuery & Options): Promise<BaseResponse> {
+}: BaseQuery & {
+  boundary?: Boundary
+  focusPoint?: Point
+  text?: string
+}): Promise<BaseResponse> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
-  const options: Options = {}
+  const options: { location?: string; searchExtent?: string } = {}
 
   if (focusPoint) {
     options.location = toString(focusPoint)
@@ -204,15 +196,18 @@ export function bulk({
   clientSecret,
   focusPoint,
   url
-}: BaseQuery & Options & { addresses: Array<string> }): Promise<
-  BaseResponse[]
-> {
+}: BaseQuery & {
+  addresses: Array<string>
+  boundary?: Boundary
+  focusPoint?: Point
+  text?: string
+}): Promise<BaseResponse> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
-  let addressesQuery: Array<string | Options> = [...addresses]
-  const options: Options = {}
+  let addressesQuery: Array<string | Record<string, string>> = [...addresses]
+  const options: Record<string, string> = {}
 
   if (boundary || focusPoint) {
-    const addressOptions: Options = {}
+    const addressOptions: { searchExtent?: string; location?: string } = {}
 
     if (boundary) {
       addressOptions.searchExtent = boundaryToSearchExtent(boundary)
@@ -222,16 +217,18 @@ export function bulk({
       addressOptions.location = toString(focusPoint)
     }
 
-    addressesQuery = addresses.map((address: unknown): Options => {
-      // add in searchExtent and/or location to each address query
-      if (typeof address === 'string') {
-        address = {
-          address
+    addressesQuery = addresses.map(
+      (address: unknown): Record<string, string> => {
+        // add in searchExtent and/or location to each address query
+        if (typeof address === 'string') {
+          address = {
+            address
+          }
         }
-      }
 
-      return Object.assign({}, addressOptions, address)
-    })
+        return Object.assign({}, addressOptions, address)
+      }
+    )
   }
 
   // make request to arcgis
@@ -268,12 +265,11 @@ export function reverse({
   forStorage = false,
   point,
   url
-}: BaseQuery &
-  Options & {
-    point: LonLatInput
-  }): Promise<BaseResponse> {
+}: BaseQuery & { forStorage?: boolean } & {
+  point: LonLatInput
+}): Promise<BaseResponse> {
   const geocoder = getGeocoder(clientId, clientSecret, url)
-  const options: Options = {}
+  const options: { forStorage?: boolean } = {}
   if (forStorage) {
     options.forStorage = true
   }
@@ -335,9 +331,23 @@ export function search({
   size = 10,
   text,
   url
-}: BaseQuery & Options): Promise<BaseResponse> {
+}: BaseQuery & {
+  boundary?: Boundary
+  focusPoint?: Point
+  forStorage?: boolean
+  magicKey?: string
+  size?: number
+  text?: string
+}): Promise<BaseResponse> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
-  const options: Options & { maxLocations?: number } = {}
+  const options: {
+    outFields?: string
+    searchExtent?: string
+    location?: string
+    forStorage?: boolean
+    magicKey?: string
+    maxLocations?: number
+  } = {}
   options.outFields = '*'
 
   if (boundary) {
