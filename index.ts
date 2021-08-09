@@ -20,9 +20,15 @@ type Boundary = {
     maxLon: number
   }
 }
-
+/**
+ * A geocoding candidate as received from either the findAddressCandidates or geocodeAddresses endpoint.
+ * See info about some attributes here: https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm
+ */
 type Candidate = {
-  location: LonLatInput
+  location: {
+    x: number
+    y: number
+  }
   attributes: Record<string, string | number>
 }
 
@@ -30,6 +36,12 @@ type BaseQuery = {
   clientId?: string
   clientSecret?: string
   url?: string
+}
+
+type SuggestOption = {
+  isCollection: boolean
+  magicKey: string
+  text: string
 }
 
 const arcGisGeocoders: GeocodersMap = {}
@@ -141,7 +153,7 @@ export function autocomplete({
   boundary?: Boundary
   focusPoint?: Point
   text?: string
-}): Promise<GeoJSON.FeatureCollection & { query: { text: string } }> {
+}): Promise<Array<SuggestOption> & { query: { text: string } }> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   const options: { location?: string; searchExtent?: string } = {}
 
@@ -156,7 +168,7 @@ export function autocomplete({
   // make request to arcgis
   return geocoder
     .suggest(text, options)
-    .then((response: { suggestions: string[] }) => {
+    .then((response: { suggestions: SuggestOption[] }) => {
       // translate response
       return {
         features: response.suggestions,
@@ -193,7 +205,7 @@ export function bulk({
   boundary?: Boundary
   focusPoint?: Point
   text?: string
-}): Promise<GeoJSON.FeatureCollection> {
+}): Promise<GeoJSON.FeatureCollection & { query: { addresses: string[] } }> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   let addressesQuery: Array<string | Record<string, string>> = [...addresses]
   const options: Record<string, string> = {}
