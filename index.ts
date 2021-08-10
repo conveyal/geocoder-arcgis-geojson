@@ -14,10 +14,10 @@ type GeocodersMap = {
 
 type Boundary = {
   rect: {
-    minLat: number
-    minLon: number
     maxLat: number
     maxLon: number
+    minLat: number
+    minLon: number
   }
 }
 /**
@@ -25,11 +25,11 @@ type Boundary = {
  * See info about some attributes here: https://developers.arcgis.com/rest/geocode/api-reference/geocoding-service-output.htm
  */
 type Candidate = {
+  attributes: Record<string, string | number>
   location: {
     x: number
     y: number
   }
-  attributes: Record<string, string | number>
 }
 
 type BaseQuery = {
@@ -214,7 +214,7 @@ export function bulk({
   const options: Record<string, string> = {}
 
   if (boundary || focusPoint) {
-    const addressOptions: { searchExtent?: string; location?: string } = {}
+    const addressOptions: { location?: string; searchExtent?: string } = {}
 
     if (boundary) {
       addressOptions.searchExtent = boundaryToSearchExtent(boundary)
@@ -287,8 +287,8 @@ export function reverse({
     .reverse(toString(point), options)
     .then(
       (response: {
-        location: LonLatInput
         address: Record<string, string>
+        location: LonLatInput
       }): GeoJSON | { query: Point } => {
         // translate response
         // ArcGIS returns only a single response for reverse geocoding
@@ -354,12 +354,12 @@ export function search({
 }): Promise<{ features: GeoJSON.FeatureCollection; query: { text: string } }> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   const options: {
-    outFields?: string
-    searchExtent?: string
-    location?: string
     forStorage?: boolean
+    location?: string
     magicKey?: string
     maxLocations?: number
+    outFields?: string
+    searchExtent?: string
   } = {}
   options.outFields = '*'
 
