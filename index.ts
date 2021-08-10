@@ -153,7 +153,7 @@ export function autocomplete({
   boundary?: Boundary
   focusPoint?: Point
   text?: string
-}): Promise<Array<SuggestOption> & { query: { text: string } }> {
+}): Promise<{ features: Array<SuggestOption>; query: { text: string } }> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   const options: { location?: string; searchExtent?: string } = {}
 
@@ -205,7 +205,10 @@ export function bulk({
   boundary?: Boundary
   focusPoint?: Point
   text?: string
-}): Promise<GeoJSON.FeatureCollection & { query: { addresses: string[] } }> {
+}): Promise<{
+  features: GeoJSON.FeatureCollection
+  query: { addresses: string[] }
+}> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   let addressesQuery: Array<string | Record<string, string>> = [...addresses]
   const options: Record<string, string> = {}
@@ -272,7 +275,7 @@ export function reverse({
 }: BaseQuery & {
   forStorage?: boolean
   point: LonLatInput
-}): Promise<GeoJSON.FeatureCollection & { query: Point }> {
+}): Promise<{ features: GeoJSON.FeatureCollection; query: Point }> {
   const geocoder = getGeocoder(clientId, clientSecret, url)
   const options: { forStorage?: boolean } = {}
   if (forStorage) {
@@ -348,7 +351,7 @@ export function search({
   magicKey?: string
   size?: number
   text?: string
-}): Promise<GeoJSON.FeatureCollection & { query: { text: string } }> {
+}): Promise<{ features: GeoJSON.FeatureCollection; query: { text: string } }> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   const options: {
     outFields?: string
