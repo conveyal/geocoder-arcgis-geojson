@@ -184,6 +184,8 @@ export function autocomplete({
  * ESRI's {@link https://developers.arcgis.com/rest/geocode/api-reference/geocoding-geocode-addresses.htm|geocodeAddresses}
  * service.
  *
+ * Note: GeoJSON.FeatureCollection includes a features array
+ *
  * @param {Object} $0
  * @param  {Array} $0.addresses     Can be array of strings or objects.  Strings can be addresses or coordinates in the form `lon,lat`
  * @param  {string} $0.clientId
@@ -205,10 +207,11 @@ export function bulk({
   boundary?: Boundary
   focusPoint?: Point
   text?: string
-}): Promise<{
-  features: GeoJSON.FeatureCollection
-  query: { addresses: string[] }
-}> {
+}): Promise<
+  GeoJSON.FeatureCollection & {
+    query: { addresses: string[] }
+  }
+> {
   const geocoder: GeocoderArcGIS = getGeocoder(clientId, clientSecret, url)
   let addressesQuery: Array<string | Record<string, string>> = [...addresses]
   const options: Record<string, string> = {}
@@ -258,6 +261,8 @@ export function bulk({
  * ESRI's {@link https://developers.arcgis.com/rest/geocode/api-reference/geocoding-reverse-geocode.htm|reverseGeocode}
  * service.
  *
+ * Note: GeoJSON.FeatureCollection includes a features array
+ *
  * @param {Object} $0
  * @param {string} [$0.clientId]
  * @param {string} [$0.clientSecret]
@@ -275,7 +280,7 @@ export function reverse({
 }: BaseQuery & {
   forStorage?: boolean
   point: LonLatInput
-}): Promise<{ features: GeoJSON.FeatureCollection; query: Point }> {
+}): Promise<GeoJSON.FeatureCollection & { query: Point }> {
   const geocoder = getGeocoder(clientId, clientSecret, url)
   const options: { forStorage?: boolean } = {}
   if (forStorage) {
