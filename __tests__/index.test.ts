@@ -2,6 +2,7 @@
 
 import * as nock from 'nock'
 
+// Jest can not compile typescript that is not a test file, so must be imported as js
 import { autocomplete, bulk, reverse, search } from '../dist/index'
 
 const mockBulkResult = require('./mock-bulk-result.json')
