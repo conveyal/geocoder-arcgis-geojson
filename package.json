@@ -34,7 +34,7 @@
     "@types/node": "^16.3.2",
     "documentation": "^13.2.5",
     "nock": "^13.1.1",
-    "semantic-release": "^17.4.4",
+    "semantic-release": "^19.0.3",
     "tsdx": "https://github.com/ibi-group/tsdx"
   },
   "bugs": {
